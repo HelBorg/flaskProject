@@ -1,0 +1,6 @@
+flask==2.0.2
+marshmallow~=3.14.0
+enum34~=1.1.10
+DateTime~=4.3
+transaction~=3.0.1
+MyApplication~=0.1.0
