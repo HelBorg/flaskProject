@@ -1,11 +1,12 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.6-alpine3.7
+FROM ubuntu:latest
+MAINTAINER Elena Borg 'letters1998@mail.ru'
+RUN apt-get update -y
+RUN apt-get install -y python3-pip python3 build-essential
 
-RUN apk --update add bash nano
-
-ENV STATIC_URL /static
-
-ENV STATIC_PATH /app/static
-
-COPY ./requirements.txt /requirements.txt
-
-RUN pip install -r /requirements.txt
+COPY requirements.txt .
+COPY /cashman .
+WORKDIR .
+RUN pip3 install -r requirements.txt
+EXPOSE 5000
+ENTRYPOINT ["python3"]
+CMD ["index.py"]
