@@ -1,18 +1,11 @@
-# Using lightweight alpine image
-FROM python:3.10-alpine
+FROM tiangolo/uwsgi-nginx-flask:python3.6-alpine3.7
 
-# Installing packages
-RUN apk update --no-cache
-RUN pip install --no-cache-dir pipenv
+RUN apk --update add bash nano
 
-# Defining working directory and adding source code
-WORKDIR ./cashman
-COPY Pipfile Pipfile.lock bootstrap.sh requirements.txt ./
-COPY cashman ./cashman
+ENV STATIC_URL /static
 
-# Install API dependencies
-RUN pipenv install --deploy --ignore-pipfile -r requirements.txt
+ENV STATIC_PATH /app/static
 
-# Start app
-EXPOSE 5000
-ENTRYPOINT ["./bootstrap.sh"]
+COPY ./requirements.txt /requirements.txt
+
+RUN pip install -r /requirements.txt
